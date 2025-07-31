@@ -3,8 +3,15 @@ import 'package:flutter/material.dart';
 import 'components/content.dart';
 import 'components/slider.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  double _value = 0.0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -12,8 +19,14 @@ class HomePage extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            ContentView(value: 0.5),
-            SliderView(),
+            ContentView(value: _value),
+            SliderView(
+              onChanged: (value) {
+                setState(() {
+                  _value = value * 100;
+                });
+              },
+            ),
           ],
         ),
       ),
