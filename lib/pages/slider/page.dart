@@ -5,7 +5,6 @@ import 'components/slider.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -14,7 +13,6 @@ class HomePage extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             ContentView(value: 0.5),
-            SizedBox(height: 64),
             SliderView(),
           ],
         ),
