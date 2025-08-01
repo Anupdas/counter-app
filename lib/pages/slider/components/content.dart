@@ -16,7 +16,7 @@ class ContentView extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.only(top: 16.0),
           child: Text(
-            '${value.round()}',
+            '${(value * 100).round()}',
             style: Theme.of(context).textTheme.displayLarge,
           ),
         ),
