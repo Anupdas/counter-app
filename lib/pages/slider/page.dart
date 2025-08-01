@@ -13,7 +13,7 @@ class HomePage extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            ContentView(value: 0.5),
+            ContentView(),
             SizedBox(height: 64),
             SliderView(),
           ],

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class ContentView extends StatelessWidget {
-  const ContentView({super.key, required this.value});
+  const ContentView({super.key, this.value = 0.5});
 
   final double value;
 
