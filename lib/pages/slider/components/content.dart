@@ -1,7 +1,9 @@
+import 'package:counter_app/pages/slider/page.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class ContentView extends StatelessWidget {
-  const ContentView({super.key, required this.value});
+  const ContentView({super.key, this.value = 0.5});
 
   final double value;
 
@@ -15,9 +17,11 @@ class ContentView extends StatelessWidget {
         ),
         Padding(
           padding: const EdgeInsets.only(top: 16.0),
-          child: Text(
-            '${value.round()}',
-            style: Theme.of(context).textTheme.displayLarge,
+          child: Consumer<SliderState>(
+            builder: (context, state, _) => Text(
+              '${(state.sliderValue * 100).round()}',
+              style: Theme.of(context).textTheme.displayLarge,
+            ),
           ),
         ),
       ],
