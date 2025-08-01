@@ -1,32 +1,19 @@
+import 'package:counter_app/pages/slider/bloc/slider_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-typedef SliderValueChanged = void Function(double);
-
-class SliderView extends StatefulWidget {
-  const SliderView({super.key, this.onChanged});
-
-  final SliderValueChanged? onChanged;
-
-  @override
-  State<SliderView> createState() => _SliderViewState();
-}
-
-class _SliderViewState extends State<SliderView> {
-  double _value = 0.5;
+class SliderView extends StatelessWidget {
+  const SliderView({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Slider(
-      value: _value,
-      onChanged: (value) {
-        setState(() {
-          _value = value;
-        });
-
-        if (widget.onChanged != null) {
-          widget.onChanged!(value);
-        }
-      },
+    return BlocBuilder<SliderBloc, SliderState>(
+      builder: (context, state) => Slider(
+        value: state.value,
+        onChanged: (value) {
+          context.read<SliderBloc>().add(SliderValueChanged(value: value));
+        },
+      ),
     );
   }
 }
