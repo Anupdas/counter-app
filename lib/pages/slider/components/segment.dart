@@ -11,10 +11,10 @@ class SegmentedControl extends StatelessWidget {
     return Consumer<SliderState>(
       builder: (_, state, _) {
         return CupertinoSlidingSegmentedControl<String>(
-          groupValue: state.isLeft ? 'Left' : 'Right',
+          groupValue: state.groupValue,
           onValueChanged: (value) {
-            context.read<SliderState>().setLeftSelected(
-              (value ?? '') == 'Left',
+            context.read<SliderState>().setGroupValue(
+              value ?? 'Left',
             );
           },
           children: {

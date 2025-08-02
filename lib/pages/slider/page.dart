@@ -22,15 +22,16 @@ class HomePage extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   SegmentedControl(),
-                  SizedBox(height: 32),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      LeftContentView(),
-                      RightContentView(),
-                    ],
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 32.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        LeftContentView(),
+                        RightContentView(),
+                      ],
+                    ),
                   ),
-                  SizedBox(height: 32),
                   SliderView(),
                 ],
               ),

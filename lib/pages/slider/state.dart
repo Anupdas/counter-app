@@ -9,15 +9,17 @@ class SliderState with ChangeNotifier {
   }
 
   void reset() {
-    _isLeft = false;
+    _groupValue = 'Left';
     setSliderValue(0.5);
   }
 
-  bool _isLeft = true;
-  bool get isLeft => _isLeft;
-  bool get isRight => !_isLeft;
-  void setLeftSelected(bool value) {
-    _isLeft = value;
+  String _groupValue = 'Left';
+  String get groupValue => _groupValue;
+  void setGroupValue(String value) {
+    _groupValue = value;
     notifyListeners();
   }
+
+  bool get isLeft => _groupValue == 'Left';
+  bool get isRight => _groupValue == 'Right';
 }

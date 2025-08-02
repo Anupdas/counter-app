@@ -6,19 +6,18 @@ import '../state.dart';
 typedef SliderValueChanged = void Function(double);
 
 class SliderView extends StatelessWidget {
-  const SliderView({super.key, this.onChanged});
-
-  final SliderValueChanged? onChanged;
+  const SliderView({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Slider(
-      value: context.watch<SliderState>().sliderValue,
-      onChanged: (value) {
-        if (onChanged != null) {
-          onChanged!(value);
-        }
-        context.read<SliderState>().setSliderValue(value);
+    return Consumer<SliderState>(
+      builder: (context, state, _) {
+        return Slider(
+          value: state.sliderValue,
+          onChanged: (value) {
+            context.read<SliderState>().setSliderValue(value);
+          },
+        );
       },
     );
   }
