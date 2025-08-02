@@ -21,9 +21,9 @@ class LeftContentView extends StatelessWidget {
             ),
             Padding(
               padding: const EdgeInsets.only(top: 16.0),
-              child: Consumer<SliderState>(
-                //shouldRebuild: (previous, next) => next.isLeft,
-                //selector: (context, state) => state,
+              child: Selector<SliderState, SliderState>(
+                shouldRebuild: (previous, next) => next.isLeft,
+                selector: (context, state) => state,
                 builder: (context, state, _) {
                   return Text(
                     '${(state.sliderValue * 100).round()}',

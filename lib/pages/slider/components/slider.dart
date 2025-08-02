@@ -10,10 +10,11 @@ class SliderView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<SliderState>(
-      builder: (context, state, _) {
+    return Selector<SliderState, double>(
+      selector: (context, state) => state.sliderValue,
+      builder: (context, sliderValue, _) {
         return Slider(
-          value: state.sliderValue,
+          value: sliderValue,
           onChanged: (value) {
             context.read<SliderState>().setSliderValue(value);
           },

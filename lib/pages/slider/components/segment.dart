@@ -8,10 +8,11 @@ class SegmentedControl extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<SliderState>(
-      builder: (_, state, _) {
+    return Selector<SliderState, String>(
+      selector: (context, state) => state.groupValue,
+      builder: (_, groupValue, _) {
         return CupertinoSlidingSegmentedControl<String>(
-          groupValue: state.groupValue,
+          groupValue: groupValue,
           onValueChanged: (value) {
             context.read<SliderState>().setGroupValue(
               value ?? 'Left',
