@@ -55,7 +55,7 @@ class HomePage extends StatelessWidget {
                     },
                   ),
 
-                  SizedBox(height: 16),
+                  SizedBox(height: 32),
                   Row(
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,

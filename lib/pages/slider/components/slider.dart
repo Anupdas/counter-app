@@ -17,7 +17,6 @@ class SliderView extends StatelessWidget {
         if (onChanged != null) {
           onChanged!(value);
         }
-
         context.read<SliderState>().setSliderValue(value);
       },
     );
