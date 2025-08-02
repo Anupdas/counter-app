@@ -1,6 +1,7 @@
-import 'package:counter_app/pages/slider/page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import '../state.dart';
 
 class LeftContentView extends StatelessWidget {
   const LeftContentView({super.key, this.value = 0.5});
