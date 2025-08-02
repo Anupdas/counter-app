@@ -1,21 +1,29 @@
+import 'package:counter_app/pages/slider/components/right_content.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'components/content.dart';
+import 'components/left_content.dart';
 import 'components/slider.dart';
 
 class SliderState with ChangeNotifier {
   double _sliderValue = 0.0;
-
   double get sliderValue => _sliderValue;
-
   void setSliderValue(double value) {
     _sliderValue = value;
     notifyListeners();
   }
 
   void reset() {
-    _sliderValue = 0.5;
+    _isLeft = false;
+    setSliderValue(0.5);
+  }
+
+  bool _isLeft = false;
+  bool get isLeft => _isLeft;
+  bool get isRight => !_isLeft;
+  void setLeftSelected(bool value) {
+    _isLeft = value;
     notifyListeners();
   }
 }
@@ -34,7 +42,28 @@ class HomePage extends StatelessWidget {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  ContentView(),
+                  CupertinoSlidingSegmentedControl<String>(
+                    groupValue: 'Left',
+                    onValueChanged: (value) {
+                      context.read<SliderState>().setLeftSelected(
+                        (value ?? '') == 'Left',
+                      );
+                    },
+                    children: {
+                      'Left': Text('Left'),
+                      'Right': Text('Right'),
+                    },
+                  ),
+
+                  SizedBox(height: 16),
+                  Row(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      LeftContentView(),
+                      RightContentView(),
+                    ],
+                  ),
                   SizedBox(height: 64),
                   SliderView(),
                 ],
