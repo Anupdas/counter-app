@@ -21,10 +21,9 @@ class HomePage extends StatelessWidget {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  SliderControl(),
+                  SegmentedControl(),
                   SizedBox(height: 32),
                   Row(
-                    mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       LeftContentView(),
@@ -37,9 +36,7 @@ class HomePage extends StatelessWidget {
               ),
             ),
             floatingActionButton: FloatingActionButton(
-              onPressed: () {
-                context.read<SliderState>().reset();
-              },
+              onPressed: () => context.read<SliderState>().reset(),
               child: Icon(Icons.refresh),
             ),
           );

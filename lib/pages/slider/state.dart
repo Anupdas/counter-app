@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class SliderState with ChangeNotifier {
-  double _sliderValue = 0.0;
+  double _sliderValue = 0.5;
   double get sliderValue => _sliderValue;
   void setSliderValue(double value) {
     _sliderValue = value;
@@ -13,7 +13,7 @@ class SliderState with ChangeNotifier {
     setSliderValue(0.5);
   }
 
-  bool _isLeft = false;
+  bool _isLeft = true;
   bool get isLeft => _isLeft;
   bool get isRight => !_isLeft;
   void setLeftSelected(bool value) {

@@ -24,10 +24,12 @@ class RightContentView extends StatelessWidget {
               child: Consumer<SliderState>(
                 //shouldRebuild: (previous, next) => next.isRight,
                 //selector: (context, state) => state,
-                builder: (context, state, _) => Text(
-                  '${(state.sliderValue * 100).round()}',
-                  style: Theme.of(context).textTheme.displayLarge,
-                ),
+                builder: (context, state, _) {
+                  return Text(
+                    '${(state.sliderValue * 100).round()}',
+                    style: Theme.of(context).textTheme.displayLarge,
+                  );
+                },
               ),
             ),
           ],
