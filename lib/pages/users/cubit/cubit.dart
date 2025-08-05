@@ -3,26 +3,32 @@ import 'package:counter_app/models/user.dart';
 import 'package:counter_app/repositories/user_repository.dart';
 import 'package:equatable/equatable.dart';
 
-part 'users_state.dart';
+part 'state.dart';
 
-class UsersCubit extends Cubit<UsersState> {
-  UsersCubit(this.repository) : super(UsersInitial());
+/// View Model and handles the use cases
+class UserListCubit extends Cubit<UserListState> {
+  /// Constructor injection
+  UserListCubit(this.repository) : super(UserListInitial());
 
+  /// User repository fetches the data
   final UserRepository repository;
+
+  /// Start the init process
+  void initialize() => getUsers();
 
   /// Get the Users
   /// All the exceptions are handled,
   /// the exceptions are well defined and
-  /// shows only user friendly internationalized/localized
+  /// shows only user displayable errors
   /// error messages
   void getUsers() async {
     try {
-      emit(UsersLoading());
+      emit(UserListLoading());
       await Future.delayed(Duration(seconds: 1));
       final users = await repository.getUsers();
-      emit(UsersLoaded(users));
+      emit(UserListLoaded(users));
     } catch (e) {
-      emit(UsersError('Unable to fetch users'));
+      emit(UserListError('Unable to fetch users'));
     }
   }
 }

@@ -12,17 +12,11 @@ class BlocApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        RepositoryProvider(
-          create: (_) => UserRepository(
-            service,
-          ),
-        ),
-      ],
+    return RepositoryProvider(
+      create: (_) => UserRepository(service),
       child: MaterialApp(
         theme: ThemeData.dark(),
-        home: UsersPage(),
+        home: UserListPage(),
       ),
     );
   }
