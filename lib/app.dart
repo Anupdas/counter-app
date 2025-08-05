@@ -20,7 +20,10 @@ class BlocApp extends StatelessWidget {
           ),
         ),
       ],
-      child: const MaterialApp(home: UsersPage()),
+      child: MaterialApp(
+        theme: ThemeData.dark(),
+        home: UsersPage(),
+      ),
     );
   }
 }

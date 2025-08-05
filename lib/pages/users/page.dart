@@ -12,9 +12,7 @@ class UsersPage extends StatelessWidget {
     return BlocProvider(
       create: (context) {
         final repository = context.read<UserRepository>();
-        final cubit = UsersCubit(repository);
-        cubit.getUsers();
-        return cubit;
+        return UsersCubit(repository)..getUsers();
       },
       child: UserView(),
     );

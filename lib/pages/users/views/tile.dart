@@ -20,7 +20,7 @@ class UserListTile extends StatelessWidget {
       subtitle: Text(
         (user.email ?? '-').toLowerCase(),
         style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-          color: Colors.grey[700],
+          color: Colors.grey,
           fontWeight: FontWeight.w300,
         ),
       ),
