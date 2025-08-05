@@ -15,6 +15,7 @@ class BlocApp extends StatelessWidget {
     return RepositoryProvider(
       create: (_) => UserRepository(service),
       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
         theme: ThemeData.dark(),
         home: UserListPage(),
       ),
