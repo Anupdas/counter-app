@@ -1,11 +1,13 @@
-class User {
+import 'package:equatable/equatable.dart';
+
+class User with EquatableMixin {
   final int id;
   final String name;
   final String? username;
   final String? email;
   final String? phone;
 
-  User({
+  const User({
     required this.id,
     required this.name,
     this.username,
@@ -42,4 +44,7 @@ class User {
     "email": email,
     "phone": phone,
   };
+
+  @override
+  List<Object?> get props => [id, name, username, email, phone];
 }
