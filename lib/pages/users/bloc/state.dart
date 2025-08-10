@@ -1,4 +1,4 @@
-part of 'cubit.dart';
+part of 'bloc.dart';
 
 sealed class UserListState extends Equatable {
   const UserListState();
@@ -28,13 +28,4 @@ final class UserListLoaded extends UserListState {
   const UserListLoaded(this.users);
   @override
   List<Object> get props => [users];
-}
-
-final class UserSelected extends UserListState {
-  final User user;
-
-  const UserSelected(this.user);
-
-  @override
-  List<Object> get props => [user];
 }

@@ -11,7 +11,7 @@ abstract class ApiService {
 /// Exceptions thrown by ApiService
 class ApiException {
   final int code;
-  final String errorMessage;
+  final String message;
 
-  ApiException(this.code, this.errorMessage);
+  ApiException(this.code, this.message);
 }

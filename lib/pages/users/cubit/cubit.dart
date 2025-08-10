@@ -13,8 +13,6 @@ class UserListCubit extends Cubit<UserListState> {
   /// User repository fetches the data
   final UserRepository repository;
 
-  final int _invocations = 0;
-
   /// Start the init process
   Future<void> initialize() => getUsers();
 
@@ -28,19 +26,14 @@ class UserListCubit extends Cubit<UserListState> {
       emit(UserListLoading());
       await Future.delayed(Duration(seconds: 1));
 
-      /// This is to simulate an error
-      // if (_invocations > 0 && kDebugMode) {
-      //   emit(UserListError('Simulated user fetch error'));
-      //   _invocations = 0;
-      //   return;
-      // } else {
-      //   _invocations++;
-      // }
-
       final users = await repository.getUsers();
       emit(UserListLoaded(users));
     } catch (e) {
       emit(UserListError('Unable to fetch users'));
     }
+  }
+
+  void onSelectUser(User user) {
+    emit(UserSelected(user));
   }
 }

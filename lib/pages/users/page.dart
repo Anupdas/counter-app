@@ -1,3 +1,4 @@
+import 'package:counter_app/pages/posts/page.dart';
 import 'package:counter_app/pages/users/cubit/cubit.dart';
 import 'package:counter_app/repositories/user_repository.dart';
 import 'package:flutter/material.dart';
@@ -42,8 +43,17 @@ class _UserListView extends StatelessWidget {
           ),
         ],
       ),
-      body: BlocBuilder<UserListCubit, UserListState>(
-        //buildWhen: (previous, current) => (current is! UserListError),
+      body: BlocConsumer<UserListCubit, UserListState>(
+        listener: (context, state) {
+          if (state is UserSelected) {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (_) => UserDetailsPage(user: state.user),
+              ),
+            );
+          }
+        },
+        buildWhen: (previous, current) => current is! UserSelected,
         builder: (context, state) {
           if (state is UserListLoading) {
             return Center(child: CircularProgressIndicator());
@@ -66,6 +76,7 @@ class _UserListView extends StatelessWidget {
               itemBuilder: (context, i) {
                 final user = state.users[i];
                 return UserListTile(
+                  onTap: () => context.read<UserListCubit>().onSelectUser(user),
                   name: user.name,
                   email: user.email ?? 'n/a',
                 );
