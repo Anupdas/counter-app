@@ -23,6 +23,9 @@ class UserRepository {
       return _users!;
     }
 
+    /// Delay added for demonstration
+    await Future.delayed(Duration(seconds: 1));
+
     return _users = await service.fetchUsers();
   }
 }
