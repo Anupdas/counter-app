@@ -16,7 +16,9 @@ class BlocApp extends StatelessWidget {
       create: (_) => UserRepository(service),
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        theme: ThemeData.dark(),
+        theme: ThemeData.dark().copyWith(
+          primaryColor: Colors.lightBlue,
+        ),
         home: UserListPage(),
       ),
     );

@@ -1,6 +1,7 @@
 import 'package:counter_app/pages/details/page.dart';
 import 'package:counter_app/pages/users/bloc/user_list_bloc.dart';
 import 'package:counter_app/repositories/user_repository.dart';
+import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -14,19 +15,21 @@ class UserListPage extends StatelessWidget {
     return BlocProvider(
       create: (context) {
         final repository = context.read<UserRepository>();
-        final bloc = UserListBloc(repository);
-        bloc.add(UserListFetch());
-        return bloc;
+        return UserListBloc(repository)..add(FetchUsers());
       },
-      child: Scaffold(
-        appBar: AppBar(title: Text('Users')),
-        body: _UserListView(),
-      ),
+      child: _UserListView(),
     );
   }
 }
 
-class _UserListView extends StatelessWidget {
+class _UserListView extends StatefulWidget {
+  @override
+  State<_UserListView> createState() => _UserListViewState();
+}
+
+class _UserListViewState extends State<_UserListView> {
+  final FocusNode searchTextNode = FocusNode();
+
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<UserListBloc, UserListState>(
@@ -39,20 +42,33 @@ class _UserListView extends StatelessWidget {
               ),
             ),
           );
+        } else if (state is UserListLoaded) {
+          if (state.showSearchBar) {
+            Future.delayed(Duration(milliseconds: 100), () {
+              if (searchTextNode.canRequestFocus) {
+                searchTextNode.requestFocus();
+              }
+            });
+          }
         }
       },
       buildWhen: (prev, cur) => cur is! UserListSelected,
       builder: (context, state) {
+        Widget body = Container();
+        bool showSearchBar = false;
+        final bloc = context.read<UserListBloc>();
         if (state is UserListLoading) {
-          return Center(child: CircularProgressIndicator());
+          body = Center(child: CircularProgressIndicator());
         } else if (state is UserListError) {
-          return Center(child: Text('Unable to fetch users!'));
+          body = Center(child: Text('Unable to fetch users!'));
         } else if (state is UserListLoaded) {
-          final users = state.users;
+          final users =
+              (state.showSearchBar ? state.filteredUsers : state.users) ?? [];
+          showSearchBar = state.showSearchBar;
 
           /// Handle empty case
           if (users.isEmpty) {
-            return ListTile(
+            body = ListTile(
               subtitle: Text(
                 'No Users found!',
                 style: Theme.of(context).textTheme.labelLarge,
@@ -61,22 +77,60 @@ class _UserListView extends StatelessWidget {
           }
 
           /// Positive use case
-          return ListView.builder(
+          body = ListView.builder(
             itemCount: users.length,
             itemBuilder: (context, i) {
               final user = users[i];
               return UserListTile(
                 name: user.name,
                 email: user.email ?? 'n/a',
-                onTap: () {
-                  context.read<UserListBloc>().add(SelectedUser(user));
-                },
+                onTap: () => bloc.add(SelectedUser(user)),
               );
             },
           );
         }
 
-        return Container();
+        return Scaffold(
+          appBar: AppBar(
+            title: (state is UserListLoaded) && state.showSearchBar
+                ? _UserSearchField(searchTextNode: searchTextNode)
+                : Text('Users'),
+
+            actions: [
+              IconButton(
+                onPressed: () => bloc.add(ToggleUserSearch(!showSearchBar)),
+                icon: Icon(showSearchBar ? Icons.close : Icons.search),
+              ),
+            ],
+          ),
+          body: body,
+        );
+      },
+    );
+  }
+}
+
+class _UserSearchField extends StatelessWidget {
+  const _UserSearchField({this.searchTextNode});
+
+  final FocusNode? searchTextNode;
+
+  @override
+  Widget build(BuildContext context) {
+    return TextField(
+      focusNode: searchTextNode,
+      decoration: InputDecoration(
+        filled: true,
+        contentPadding: EdgeInsets.all(12),
+        hintText: 'Search by name or email',
+      ),
+
+      onChanged: (value) {
+        EasyDebounce.debounce(
+          'search_user',
+          Durations.medium1,
+          () => context.read<UserListBloc>().add(SearchUser(value)),
+        );
       },
     );
   }
