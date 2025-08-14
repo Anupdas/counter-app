@@ -44,7 +44,7 @@ class _UserListViewState extends State<_UserListView> {
           );
         } else if (state is UserListLoaded) {
           if (state.showSearchBar) {
-            Future.delayed(Duration(milliseconds: 100), () {
+            WidgetsBinding.instance.addPostFrameCallback((_) {
               if (searchTextNode.canRequestFocus) {
                 searchTextNode.requestFocus();
               }
